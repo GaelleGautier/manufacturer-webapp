@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .ad-input-text {
+    @apply h-10 rounded-md border p-2;
+  }
+}
+
+@layer components {
+  .ad-nav-xl {
+    @apply text-3xl font-semibold;
+    font-family: 'Inter', verdana;
+  }
+
+  /*    30 SemiBold ?? breadCrumb */
+  .ad-nav-l {
+    @apply text-lg font-semibold;
+    font-family: 'Inter', verdana;
+  }
+
+  /*  18 SemiBold  */
+  .ad-nav-m {
+    @apply text-lg font-normal;
+    font-family: 'Inter', verdana;
+  }
+
+  /* 18 Regular  */
+  .ad-nav-s {
+    @apply text-xs font-semibold uppercase;
+    font-family: 'Inter', verdana;
+  }
+
+  /*  12 SemiBold  */
+  .ad-text-l {
+    @apply text-sm font-semibold;
+    font-family: 'Inter', verdana;
+  }
+
+  /*   14 SemiBold  */
+  .ad-text-m {
+    @apply text-sm font-normal;
+    font-family: 'Inter', verdana;
+  }
+
+  /*  14 Regular  */
+  .ad-text-s {
+    @apply text-xs font-normal;
+    font-family: 'Inter', verdana;
+  }
+
+
+/* For angular-jsoneditor */
+textarea.jsoneditor-text {
+  min-height: 40vh;
+  height: 100%;
+}
+
+.ace_editor.ace-jsoneditor {
+  min-height: 40vh;
+  height: 100%;
+}
+
+.jsonBox {
+  margin-top: 1rem;
+}

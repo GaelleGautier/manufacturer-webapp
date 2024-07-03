@@ -1,0 +1,11 @@
+<div class="ad-text-s">
+  <div class="flex place-content-center items-center justify-center">
+    <button class="rounded-xl border border-adbgborder px-4 py-2" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+      Previous
+    </button>
+    <div class="px-4 py-2">page {{ currentPage }} to {{ totalPages }}</div>
+    <button class="rounded-xl border border-adbgborder px-4 py-2" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">
+      Next
+    </button>
+  </div>
+</div>

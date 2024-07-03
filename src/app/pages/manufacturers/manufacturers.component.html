@@ -1,0 +1,77 @@
+<div class="flex flex-col flex-wrap">
+  <div class="ad-nav-m flex p-4">
+    <h2>Manufacturers</h2>
+  </div>
+  <div class="m-4 flex justify-between">
+    <button class="rounded-xl bg-adbgselected pr-2 text-adbglight" type="button" (click)="goToAddPage()">
+      <span class="font-icon ad-nav-m px-1 text-left">&#64;</span>Create a manufacturer
+    </button>
+    <div class="flex max-w-full space-x-4">
+      <label class="ad-text-l m-4 self-center" for="reviewStateSelect">Filter by Review State: </label>
+      <select
+        class="ad-input-text mt-1 h-10 self-center rounded-lg border-gray-300 px-4 focus:border-blue-500 focus:ring-blue-500"
+        id="reviewStateSelect"
+        [(ngModel)]="reviewStates"
+        (change)="searchReviewState()">
+        <option value="">All</option>
+        @for (state of availableReviewStates; track state) {
+          <option [value]="state">{{ state }}</option>
+        }
+      </select>
+    </div>
+  </div>
+  <div class="m-4 overflow-x-auto">
+    <table class="w-full border-collapse overflow-hidden rounded-xl shadow-adtable">
+      <thead class="bg-adbgdark text-adtxtwhite">
+        <tr class="h-12 border-hidden uppercase">
+          <th class="ad-text-s border border-adbgborder">Name</th>
+          <th class="ad-text-s border border-adbgborder">URL</th>
+          <th class="ad-text-s border border-adbgborder">Address</th>
+          <th class="ad-text-s border border-adbgborder">Headquarter Country Code</th>
+          <th class="ad-text-s border border-adbgborder">Category</th>
+          <th class="ad-text-s border border-adbgborder">Catalog Size</th>
+          <th class="ad-text-s border border-adbgborder">Review State</th>
+          <th class="ad-text-s border border-adbgborder">Aliases</th>
+          <th class="ad-text-s border border-adbgborder">Details</th>
+        </tr>
+      </thead>
+      <tbody class="[&>*:nth-child(2n-1)]:bg-adbgwhite">
+        @for (manufacturer of displayedManufacturers; track manufacturer.id) {
+          <tr class="ad-text-m h-12 border border-adbgborder">
+            <td class="border border-adbgborder px-2.5">{{ manufacturer.name | titlecase }}</td>
+            <td class="border border-adbgborder px-2.5">{{ manufacturer.url | lowercase }}</td>
+            <td class="border border-adbgborder px-2.5">{{ manufacturer.address | titlecase }}</td>
+            <td class="border border-adbgborder px-2.5">{{ manufacturer.headquarterCountryCode | uppercase }}</td>
+            <td class="border border-adbgborder px-2.5">{{ manufacturer.category | lowercase }}</td>
+            <td class="border border-adbgborder px-2.5">{{ manufacturer.catalogSize }}</td>
+            <td class="border border-adbgborder px-2.5">{{ manufacturer.reviewState | uppercase }}</td>
+            <td class="border border-adbgborder px-2.5">
+              @for (alias of manufacturer.aliases; track alias.name) {
+                <ul>
+                  <li>{{ alias.name | titlecase }}</li>
+                </ul>
+              }
+            </td>
+            <td class="border border-adbgborder px-2.5">
+              <button type="button" (click)="goToDetails(manufacturer.id)">
+                <span class="font-icon ad-nav-m px-4" alt="Details">&#49;</span>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+      <tfoot class="h-12 bg-adbgdark text-adtxtwhite">
+        <tr>
+          <th scope="row" colspan="100%">
+            <app-pagination
+              [totalItems]="manufacturers.length"
+              [itemsPerPage]="itemsPerPage"
+              [currentPage]="currentPage"
+              (pageChange)="onPageChange($event)">
+            </app-pagination>
+          </th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

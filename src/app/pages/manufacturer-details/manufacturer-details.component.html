@@ -1,0 +1,121 @@
+<div class="flex flex-col p-4">
+  <div class="ad-nav-m flex justify-center">
+    <h2>Manufacturer details</h2>
+  </div>
+
+  <form [formGroup]="manufacturerForm" (ngSubmit)="onSubmit()">
+    <div class="ad-text-m mt-4 rounded-xl border border-adbgborder bg-adbgwhite px-4 py-4">
+      <div class="flex flex-col">
+        <label for="name" class="ad-text-l">Name:</label>
+        <input
+          formControlName="name"
+          type="text"
+          id="name"
+          autocomplete="organization"
+          class="ad-input-text mt-2 h-10 rounded-lg border-gray-300 px-4 focus:border-blue-500 focus:ring-blue-500" />
+        @if (form['name'].touched && form['name'].invalid) {
+          <div class="text-sm text-red-800" role="alert">
+            @if (form['name'].errors?.['required']) {
+              <div>Name is required.</div>
+            }
+          </div>
+        }
+
+        <label for="url" class="ad-text-l mt-4">URL:</label>
+        <input
+          formControlName="url"
+          type="text"
+          id="url"
+          class="ad-input-text mt-2 h-10 rounded-lg border-gray-300 px-4 focus:border-blue-500 focus:ring-blue-500" />
+        <div *ngIf="form['url'].touched && form['url'].invalid" class="text-sm text-red-800" role="alert">
+          <div *ngIf="form['url'].errors?.['required']">URL is required.</div>
+        </div>
+
+        <label for="address" class="ad-text-l mt-4">Address:</label>
+        <input
+          formControlName="address"
+          type="text"
+          id="address"
+          autocomplete="street-address"
+          class="ad-input-text mt-2 h-10 rounded-lg border-gray-300 px-4 focus:border-blue-500 focus:ring-blue-500" />
+        <div *ngIf="form['address'].touched && form['address'].invalid" class="text-sm text-red-800" role="alert">
+          <div *ngIf="form['address'].errors?.['required']">Address is required.</div>
+        </div>
+
+        <label for="headquarterCountryCode" class="ad-text-l mt-4">Headquarter Country Code:</label>
+        <input
+          formControlName="headquarterCountryCode"
+          type="text"
+          id="headquarterCountryCode"
+          class="ad-input-text mt-2 h-10 rounded-lg border-gray-300 px-4 focus:border-blue-500 focus:ring-blue-500" />
+        <div *ngIf="form['headquarterCountryCode'].touched && form['headquarterCountryCode'].invalid" class="text-sm text-red-800" role="alert">
+          <div *ngIf="form['headquarterCountryCode'].errors?.['required']">Headquarter Country Code is required.</div>
+          <div *ngIf="form['headquarterCountryCode'].errors?.['pattern']">Headquarter Country Code has 2 letters.</div>
+        </div>
+
+        <label for="category" class="ad-text-l mt-4">Category:</label>
+        <textarea
+          formControlName="category"
+          rows="2"
+          id="category"
+          class="mt-2 h-auto rounded-lg border border-gray-300 px-4 pt-2 focus:border-blue-500 focus:ring-blue-500">
+        </textarea>
+        <div *ngIf="form['category'].touched && form['category'].invalid" class="text-sm text-red-800" role="alert">
+          <div *ngIf="form['category'].errors?.['required']">Category is required.</div>
+        </div>
+
+        <label for="catalogSize" class="ad-text-l mt-4">Catalog Size:</label>
+        <input
+          formControlName="catalogSize"
+          type="text"
+          id="catalogSize"
+          class="ad-input-text mt-2 h-10 rounded-lg border-gray-300 px-4 focus:border-blue-500 focus:ring-blue-500" />
+        <div *ngIf="form['catalogSize'].touched && form['catalogSize'].invalid" class="text-sm text-red-800" role="alert">
+          <div *ngIf="form['catalogSize'].errors?.['required']">Catalog Size is required.</div>
+        </div>
+
+        <label for="reviewState" class="ad-text-l mt-4">Review State:</label>
+        <select
+          formControlName="reviewState"
+          id="reviewState"
+          class="ad-input-text mt-2 h-10 rounded-lg border-gray-300 px-4 focus:border-blue-500 focus:ring-blue-500">
+          <option value="" disabled>Choose a review state</option>
+          @for (reviewState of reviewStates; track reviewStates) {
+            <option [ngValue]="reviewState">{{ reviewState }}</option>
+          }
+        </select>
+        <div *ngIf="form['reviewState'].touched && form['reviewState'].invalid" class="text-sm text-red-800" role="alert">
+          <div *ngIf="form['reviewState'].errors?.['required']">Review State is required.</div>
+        </div>
+
+        <div class="mt-4" formArrayName="aliases">
+          <div *ngFor="let alias of aliases.controls; let i = index" [formGroupName]="i" class="flex flex-col">
+            <label for="alias{{ i }}" class="ad-text-l flex space-x-4">Alias {{ i + 1 }}:</label>
+            <input
+              formControlName="name"
+              id="alias{{ i }}"
+              type="text"
+              class="ad-input-text mt-2 h-10 rounded-lg border-gray-300 px-4 focus:border-blue-500 focus:ring-blue-500" />
+            <div class="my-2 flex space-x-4">
+              <button class="rounded-xl bg-adbgselected px-4 py-2 text-adbglight" type="button" (click)="deleteAlias(i)">Delete alias</button>
+            </div>
+          </div>
+          <div class="my-4">
+            <button class="rounded-xl bg-adbgselected px-2 py-1 text-adbglight" type="button" (click)="addAlias()">
+              <span class="font-icon ad-nav-m pr-1 text-left">&#64;</span>Add new alias
+            </button>
+          </div>
+        </div>
+        <hr />
+
+        <div class="mt-4 flex justify-center space-x-8">
+          <button class="rounded-xl bg-adbgselected px-4 py-2 text-adbglight" type="submit">Update</button>
+          @if (manufacturer) {
+            <button class="rounded-xl bg-adbgselected px-4 py-2 text-adbglight" type="button" (click)="deleteManufacturer()">Delete</button>
+          }
+          <button class="rounded-xl bg-adbgselected px-4 py-2 text-adbglight" type="button" (click)="goBack()">Back</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
